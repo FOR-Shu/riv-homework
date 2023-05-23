@@ -10,7 +10,7 @@ export default function Bike(props) {
     const { actions } = useAnimations(animations, group);
 
     return (
-        <group ref={group} {...props} dispose={null} scale={[0.0012, 0.0012, 0.0012]} position={[-365, -18, -67]} rotation-y={Math.PI}>
+        <group ref={group} {...props} dispose={null} position={[8.7, 0, 0]} scale={0.5} rotation-y={[Math.PI / 2]}>
             <group name="Scene">
                 <group name="Cyclist" rotation={[Math.PI / 2, 0, 0]}>
                     <primitive object={nodes.Skeleton} />

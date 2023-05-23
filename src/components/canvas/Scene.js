@@ -7,20 +7,24 @@ import { OrbitControls, Preload, useGLTF, useAnimations } from "@react-three/dre
 import CanvasLoader from "./Loader";
 import Bike from './bike';
 import Island from './island';
+import InfoCard from '../infoCard';
 
 const Scene = () => {
     return (
-        <Canvas className={styles.webgl} frameLoop='demand' shadows camera={{ position: [20, 3, 5], fov: 25 }} gl={{ preserveDrawingBuffer: true }}>
-            <Suspense fallback={<CanvasLoader />}>
-                <ambientLight />
-                <OrbitControls enableZoom={false} maxPolarAngle={Math.PI / 2.2} minPolarAngle={Math.PI / 2.4} />
+        <div className={styles.main}>
+            <InfoCard />
+            <Canvas className={styles.canvas} frameLoop='demand' shadows camera={{ position: [20, 3, 5], fov: 30 }} gl={{ preserveDrawingBuffer: true }}>
+                <Suspense fallback={<CanvasLoader />}>
+                    <ambientLight />
+                    <OrbitControls enableZoom={false} maxPolarAngle={Math.PI / 2.2} minPolarAngle={Math.PI / 2.4} />
 
-                <Island />
-                <Bike/>
+                    <Bike />
+                    <Island />
 
-            </Suspense>
-            <Preload all />
-        </Canvas>
+                </Suspense>
+                <Preload all />
+            </Canvas>
+        </div>
     );
 };
 
