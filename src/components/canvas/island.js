@@ -14,15 +14,16 @@ export default function Island(props) {
 
     // 使用 useDrag 鉤子來捕獲拖拉事件
     const bind = useDrag(({ movement: [x] }) => {
-        groupRef.current.rotation.y = x * Math.PI / 5;
-        console.log(groupRef.current.rotation.y)
-        if (groupRef.current.rotation.y < 0 && groupRef.current.rotation.y > -2) {
+        groupRef.current.rotation.y = x * Math.PI / 2;
+        var numY = -Math.floor(groupRef.current.rotation.y * 2 / Math.PI) % 4
+        console.log(numY)
+        if (numY >= 1 && numY <= 2) {
             setPopupVisible(true)
         } else {
             setPopupVisible(false)
         }
     });
-    
+
     return (
         <group {...props} ref={groupRef} dispose={null} scale={0.75} {...bind()}>
             {popupVisible && (
