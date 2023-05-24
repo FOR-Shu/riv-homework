@@ -5,56 +5,26 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber"
 import { OrbitControls, Preload, useGLTF, useAnimations, Html } from "@react-three/drei"
 import { Raycaster } from 'three'
 import InfoCard from '../infoCard'
+import { useDrag } from '@use-gesture/react';
 
 export default function Island(props) {
     const groupRef = useRef()
     const [popupVisible, setPopupVisible] = useState(false)
     const { scene, nodes, materials } = useGLTF("/island.glb")
-    const raycaster = new Raycaster()
 
-    useFrame(({ mouse }) => {
-        const { x, y } = mouse
-        groupRef.current.rotation.y = x * Math.PI * 2
-        // console.log(groupRef.current.rotation.y)
-        if (groupRef.current.rotation.y < -0.7 && groupRef.current.rotation.y > -1.6) {
+    // 使用 useDrag 鉤子來捕獲拖拉事件
+    const bind = useDrag(({ movement: [x] }) => {
+        groupRef.current.rotation.y = x * Math.PI / 5;
+        console.log(groupRef.current.rotation.y)
+        if (groupRef.current.rotation.y < 0 && groupRef.current.rotation.y > -2) {
             setPopupVisible(true)
         } else {
             setPopupVisible(false)
         }
     });
-
-    // const isDragging = useRef(false);
-    // const previousMousePosition = useRef([0, 0]);
-
-    // const handleMouseDown = () => {
-    //     isDragging.current = true;
-    // };
-
-    // const handleMouseUp = () => {
-    //     isDragging.current = false;
-    // };
-
-    // const handleMouseMove = (event) => {
-    //     if (!isDragging.current) return;
-
-    //     const { movementX, movementY } = event;
-    //     const sensitivity = 0.01;
-
-    //     const [previousX, previousY] = previousMousePosition.current;
-    //     const rotationY = groupRef.current.rotation.y + movementX * sensitivity;
-    //     const rotationX = groupRef.current.rotation.x + movementY * sensitivity;
-
-    //     groupRef.current.rotation.y = rotationY;
-    //     groupRef.current.rotation.x = rotationX;
-
-    //     previousMousePosition.current = [previousX + movementX, previousY + movementY];
-    // };
-
-    // useFrame(() => {
-    //     previousMousePosition.current = [0, 0];
-    // });
+    
     return (
-        <group {...props} ref={groupRef} dispose={null} scale={0.75} >
+        <group {...props} ref={groupRef} dispose={null} scale={0.75} {...bind()}>
             {popupVisible && (
                 <Html position={[4, 5, 0]} >
                     <InfoCard />

@@ -1,4 +1,5 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Riv Studio Front-end Developer 面試實作作業 - 3D Scene
+
 
 ## Getting Started
 

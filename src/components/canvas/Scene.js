@@ -13,7 +13,7 @@ const Scene = () => {
 
     return (
         <div className={styles.main}>
-
+            
             <Canvas className={styles.background} frameLoop='demand' shadows camera={{ position: [20, 3, 5], fov: 30 }} gl={{ preserveDrawingBuffer: true }}>
                 <Suspense fallback={<CanvasLoader />}>
                     <ambientLight intensity={0.5} />
