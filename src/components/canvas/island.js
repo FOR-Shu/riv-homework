@@ -14,7 +14,8 @@ export default function Island({ onIslandData }) {
     // 使用 useDrag 鉤子來捕獲拖拉事件
     const bind = useDrag(({ movement: [x] }) => {
         groupRef.current.rotation.y = x * Math.PI / 2;
-        console.log('groupRef.current.rotation.y' + groupRef.current.rotation.y)
+        console.log('x -----> ' + x)
+        console.log('groupRef.current.rotation.y -----> ' + groupRef.current.rotation.y)
         onIslandData(groupRef.current.rotation.y);
         var numY = -(groupRef.current.rotation.y * 2 / Math.PI) % 4
         // console.log('numY'+numY)
