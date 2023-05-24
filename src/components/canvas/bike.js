@@ -3,12 +3,25 @@ import styles from './canvas.module.scss'
 import React, { Suspense, useEffect, useState, useRef } from "react";
 import { useFrame, useLoader } from "@react-three/fiber";
 import { useGLTF, useAnimations } from "@react-three/drei";
-
+import * as THREE from 'three';
 
 export default function Bike(props) {
     const group = useRef();
     const { nodes, materials, animations } = useGLTF("/cyclist.glb");
-    const { actions } = useAnimations(animations, group);
+    const { actions, names } = useAnimations(animations, group)
+    // const rideBike = props.islandData || 0;
+    // const prevRideBike = useRef(rideBike);
+
+    useEffect(() => {
+        const animationAction = actions[names[0]];
+        animationAction.reset().fadeIn(0.5).play();
+
+        // 倒放動畫\設置時間縮放為負值，即倒放動畫
+        // animationAction.timeScale = -1;
+
+        // 快進動畫\設置持續時間為原來的一半，即快進到一半的速度
+        // animationAction.setDuration(animationAction.getClip().duration * 0.5);
+    }, [actions, names]);
 
     return (
         <group ref={group} {...props} dispose={null} position={[8.7, 0, 2]} scale={0.33} rotation-y={[Math.PI / 2]}>

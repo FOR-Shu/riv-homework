@@ -3,11 +3,10 @@ import styles from './canvas.module.scss'
 import React, { Suspense, useEffect, useState, useRef } from "react"
 import { Canvas, useFrame, useThree } from "@react-three/fiber"
 import { OrbitControls, Preload, useGLTF, useAnimations, Html } from "@react-three/drei"
-import { Raycaster } from 'three'
 import InfoCard from '../infoCard'
 import { useDrag } from '@use-gesture/react';
 
-export default function Island(props) {
+export default function Island({ onIslandData }) {
     const groupRef = useRef()
     const [popupVisible, setPopupVisible] = useState(false)
     const { scene, nodes, materials } = useGLTF("/island.glb")
@@ -15,9 +14,11 @@ export default function Island(props) {
     // 使用 useDrag 鉤子來捕獲拖拉事件
     const bind = useDrag(({ movement: [x] }) => {
         groupRef.current.rotation.y = x * Math.PI / 2;
-        var numY = -Math.floor(groupRef.current.rotation.y * 2 / Math.PI) % 4
-        console.log(numY)
-        if (numY >= 1 && numY <= 2) {
+        console.log('groupRef.current.rotation.y' + groupRef.current.rotation.y)
+        onIslandData(groupRef.current.rotation.y);
+        var numY = -(groupRef.current.rotation.y * 2 / Math.PI) % 4
+        // console.log('numY'+numY)
+        if (numY >= 0 && numY <= 1) {
             setPopupVisible(true)
         } else {
             setPopupVisible(false)
@@ -25,7 +26,7 @@ export default function Island(props) {
     });
 
     return (
-        <group {...props} ref={groupRef} dispose={null} scale={0.75} {...bind()}>
+        <group ref={groupRef} dispose={null} scale={0.75} {...bind()}>
             {popupVisible && (
                 <Html position={[4, 5, 0]} >
                     <InfoCard />
