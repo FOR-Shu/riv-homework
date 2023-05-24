@@ -10,7 +10,12 @@
     background: linear-gradient(0deg, rgb(255, 255, 255) 50%, rgb(117, 170, 240) 100%);
 }
 
-.canvas {
+.bike {
+    position: absolute;
+    z-index: 0;
+}
+
+.background {
     position: absolute;
     z-index: -1;
     touch-action: none;
